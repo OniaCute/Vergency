@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "vergency",
+  "version": "${version}",
+  "name": "Vergency",
+  "description": "Get Unique Sense Of Minecraft",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/vergency/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "cc.vergency.client.VergencyDataGenerator"
+    ],
+    "client": [
+      "cc.vergency.client.VergencyClient"
+    ],
+    "main": [
+      "cc.vergency.Vergency"
+    ]
+  },
+  "mixins": [
+    "vergency.mixins.json",
+    {
+      "config": "vergency.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
