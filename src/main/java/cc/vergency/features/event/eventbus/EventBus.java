@@ -1,8 +1,8 @@
-package cc.vergence.features.event.eventbus;
+package cc.vergency.features.event.eventbus;
 
-import cc.vergence.features.event.eventbus.interfaces.ICancellable;
-import cc.vergence.features.event.eventbus.interfaces.IEventBus;
-import cc.vergence.features.event.eventbus.interfaces.IListener;
+import cc.vergency.features.event.eventbus.interfaces.ICancellable;
+import cc.vergency.features.event.eventbus.interfaces.IEventBus;
+import cc.vergency.features.event.eventbus.interfaces.IListener;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

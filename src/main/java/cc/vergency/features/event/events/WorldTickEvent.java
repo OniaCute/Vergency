@@ -1,4 +1,6 @@
 package cc.vergency.features.event.events;
 
-public class WorldTickEvent {
+import cc.vergency.features.event.Event;
+
+public class WorldTickEvent extends Event {
 }

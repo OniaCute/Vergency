@@ -1,6 +1,6 @@
-package cc.vergence.features.event.eventbus;
+package cc.vergency.features.event.eventbus;
 
-import cc.vergence.features.event.eventbus.interfaces.IListener;
+import cc.vergency.features.event.eventbus.interfaces.IListener;
 
 import java.util.function.Consumer;
 

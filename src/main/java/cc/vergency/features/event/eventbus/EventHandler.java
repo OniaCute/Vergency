@@ -1,4 +1,4 @@
-package cc.vergence.features.event.eventbus;
+package cc.vergency.features.event.eventbus;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

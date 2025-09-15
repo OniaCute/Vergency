@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "cc.vergency.mixin",
+  "package": "cc.vergency.injections",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
@@ -10,5 +10,9 @@
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "client": [
+    "mixins.client.MixinMinecraftClient",
+    "mixins.client.MixinWindow"
+  ]
 }

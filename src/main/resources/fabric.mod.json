@@ -10,22 +10,12 @@
   "icon": "assets/vergency/icon.png",
   "environment": "client",
   "entrypoints": {
-    "fabric-datagen": [
-      "cc.vergency.client.VergencyDataGenerator"
-    ],
-    "client": [
-      "cc.vergency.client.VergencyClient"
-    ],
     "main": [
       "cc.vergency.Vergency"
     ]
   },
   "mixins": [
-    "vergency.mixins.json",
-    {
-      "config": "vergency.client.mixins.json",
-      "environment": "client"
-    }
+    "vergency.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

@@ -1,4 +1,4 @@
-package cc.vergence.features.event;
+package cc.vergency.features.event;
 
 public class Event {
     private Stage stage;

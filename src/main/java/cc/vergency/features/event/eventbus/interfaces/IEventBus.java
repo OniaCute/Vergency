@@ -1,7 +1,7 @@
-package cc.vergence.features.event.eventbus.interfaces;
+package cc.vergency.features.event.eventbus.interfaces;
 
-import cc.vergence.features.event.eventbus.EventHandler;
-import cc.vergence.features.event.eventbus.LambdaListener;
+import cc.vergency.features.event.eventbus.EventHandler;
+import cc.vergency.features.event.eventbus.LambdaListener;
 
 /**
  * Manages event listeners.

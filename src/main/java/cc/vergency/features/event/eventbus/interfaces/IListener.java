@@ -1,4 +1,4 @@
-package cc.vergence.features.event.eventbus.interfaces;
+package cc.vergency.features.event.eventbus.interfaces;
 
 /**
  * Base type for all listeners.
