@@ -12,7 +12,11 @@
     "requireAnnotations": true
   },
   "client": [
+    "accessories.render.BufferRendererAccessor",
     "mixins.client.MixinMinecraftClient",
-    "mixins.client.MixinWindow"
+    "mixins.client.MixinWindow",
+    "mixins.player.MixinClientPlayerEntity",
+    "mixins.player.MixinInGameHud",
+    "mixins.render.MixinGameRenderer"
   ]
 }

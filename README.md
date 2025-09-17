@@ -3,7 +3,7 @@
 
 ## About
 Get Vergency To Get Unique Sense Of Minecraft
->This project is the Recode version of the Vergence Client, aiming to optimize the project structure, code logic, enhance the running efficiency, and provide more functions, higher degree of customizability, and more efficient and elegant UI. Just like Vergence Client, Vergency Client is completely free and open-source.
+>This project is the Recode version of the Vergency Client, aiming to optimize the project structure, code logic, enhance the running efficiency, and provide more functions, higher degree of customizability, and more efficient and elegant UI. Just like Vergency Client, Vergency Client is completely free and open-source.
 
 ## Prices
 | Subscription | Price |
@@ -24,4 +24,4 @@ Get Vergency To Get Unique Sense Of Minecraft
 `≥ 0.16.9` Fabric API
 
 ## How to install
-Just put the `Vergence-x.x.x.jar` file into the `mods` folder of your Minecraft version.
+Just put the `Vergency-x.x.x.jar` file into the `mods` folder of your Minecraft version.
