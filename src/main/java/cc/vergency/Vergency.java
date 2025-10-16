@@ -1,6 +1,13 @@
 package cc.vergency;
 
 import cc.vergency.features.event.eventbus.EventBus;
+import cc.vergency.features.managers.features.ModuleManager;
+import cc.vergency.features.managers.features.NetworkManager;
+import cc.vergency.features.managers.player.RotateManager;
+import cc.vergency.features.managers.ui.GuiManager;
+import cc.vergency.modules.client.AntiCheat;
+import cc.vergency.modules.client.ClickGui;
+import cc.vergency.modules.client.Client;
 import cc.vergency.utils.interfaces.Wrapper;
 import cc.vergency.utils.others.Console;
 import net.fabricmc.api.ModInitializer;
@@ -28,6 +35,10 @@ public class Vergency implements ModInitializer, Wrapper {
     // Manager & Preload
     public static Console CONSOLE;
     public static EventBus EVENTBUS;
+    public static NetworkManager NETWORK;
+    public static RotateManager ROTATION;
+    public static ModuleManager MODULE;
+    public static GuiManager GUI;
 
     // Mod Info Load
     static {
@@ -65,6 +76,19 @@ public class Vergency implements ModInitializer, Wrapper {
         AUTHORS.add("Onia");
         // Real load
         LOAD_TIME = System.currentTimeMillis();
+
+        // Managers
+        NETWORK = new NetworkManager();
+        CONSOLE.logInfo("Network Manager was loaded");
+
+        ROTATION = new RotateManager();
+        CONSOLE.logInfo("Rotate Manager was loaded");
+
+        MODULE = new ModuleManager();
+        CONSOLE.logInfo("Module Manager was loaded");
+
+        GUI = new GuiManager();
+        CONSOLE.logInfo("Gui Manager was loaded");
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             if (LOADED) {

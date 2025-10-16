@@ -4,6 +4,7 @@
   "package": "cc.vergency.injections",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "mixins.network.MixinClientConnection"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -13,10 +14,19 @@
   },
   "client": [
     "accessories.render.BufferRendererAccessor",
+    "accessories.world.ClientWorldAccessor",
+    "mixins.chat.MixinChatHud",
+    "mixins.chat.MixinChatHudLine",
+    "mixins.chat.MixinChatHudLineVisible",
+    "mixins.chat.MixinChatMessages",
     "mixins.client.MixinMinecraftClient",
     "mixins.client.MixinWindow",
+    "mixins.hardware.MixinKeyboard",
+    "mixins.hardware.MixinMouseActive",
     "mixins.player.MixinClientPlayerEntity",
-    "mixins.player.MixinInGameHud",
-    "mixins.render.MixinGameRenderer"
+    "mixins.render.MixinGameRenderer",
+    "mixins.render.MixinInGameHud",
+    "mixins.screen.MixinConnectScreen",
+    "mixins.screen.MixinWindow"
   ]
 }

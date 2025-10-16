@@ -168,6 +168,7 @@ public abstract class Module implements Wrapper {
     public void onDisable() {}
     public void onBlock(Module module) {}
     public void onUnblock() {}
+    public void onRegister() {}
 
     public String getName() {
         return name;

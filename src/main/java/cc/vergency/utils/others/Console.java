@@ -1,5 +1,8 @@
 package cc.vergency.utils.others;
 
+import cc.vergency.Vergency;
+import cc.vergency.ui.Component;
+
 public class Console {
     /**
      * Input a distinctive text with an ID into the log, so that it can be used for troubleshooting and repair when problems occur.This function is not allowed to have the "nameless" option because it is necessary to ensure that the Flag comes from the Vergency Client.
@@ -32,5 +35,10 @@ public class Console {
 
     public void logError(String message, boolean nameless) {
         System.out.println(nameless ? "" : "[Vergency] " + "[ERROR] " + message);
+    }
+
+    // Fast Logging
+    public void logTransferWarn(Component componentA, Component componentB) {
+        Vergency.CONSOLE.logWarn("[UI] Transfer is incorrect. From: \"" + componentA.getType().name() + "\" to \"" + componentB.getType() + "\"");
     }
 }

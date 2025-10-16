@@ -58,7 +58,7 @@ public class BlurShader {
     private String read(String path) {
         try {
             return IOUtils.toString(
-                    MinecraftClient.getInstance().getResourceManager().getResource(Identifier.of("vergence", "shaders/core/" + path)).get().getInputStream(),
+                    MinecraftClient.getInstance().getResourceManager().getResource(Identifier.of("vergency", "shaders/core/" + path)).get().getInputStream(),
                     StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new IllegalStateException("Could not read shader '" + path + "'", e);

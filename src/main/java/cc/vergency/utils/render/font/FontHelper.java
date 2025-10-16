@@ -18,7 +18,7 @@ public class FontHelper {
 	}
 
 	private static Typeface loadTypeface(String font, FontType type) {
-		Optional<Data> fontDataOptional = SkiaUtil.convertToData("/assets/vergency/fonts/" + font);
+		Optional<Data> fontDataOptional = SkiaUtil.convertToData("/assets/vergency/font/" + font);
 		return fontDataOptional.map(Typeface::makeFromData)
 				.orElseThrow(() -> new IllegalArgumentException("Font not found: " + font));
 	}

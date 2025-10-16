@@ -3,6 +3,7 @@ package cc.vergency.utils.render;
 import cc.vergency.features.enums.others.Aligns;
 import cc.vergency.modules.client.Client;
 import cc.vergency.utils.interfaces.Wrapper;
+import cc.vergency.utils.others.Pair;
 import cc.vergency.utils.render.blur.KawaseBlur;
 import cc.vergency.utils.render.skia.AlphaOverride;
 import cc.vergency.utils.render.skia.SkiaContext;
@@ -18,7 +19,6 @@ import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.joml.Matrix4f;
-import oshi.util.tuples.Pair;
 
 import java.awt.*;
 import java.awt.Color;
@@ -80,6 +80,9 @@ public class Render2DUtil implements Wrapper {
     public static void scale(float s) {
         getCanvas().scale(s, s);
     }
+    public static void rotate(float deg) {
+        getCanvas().rotate(deg);
+    }
 
     public static void translate(float x, float y) {
         getCanvas().translate(x, y);
@@ -90,9 +93,7 @@ public class Render2DUtil implements Wrapper {
     }
 
     public static void clip(float x, float y, float width, float height, float radius, ClipMode mode) {
-
         Path path = new Path();
-
         path.addRRect(RRect.makeXYWH(x, y, width, height, radius));
         clipPath(path, mode, true);
     }
@@ -169,7 +170,22 @@ public class Render2DUtil implements Wrapper {
 
     public static void drawRoundedRectWithOutline(float x, float y, float w, float h, float r, float ow, Color fill, Color outline) {
         drawRoundedRect(x, y, w, h, r, fill);
-        drawRectOutline(x - ow, y - ow, w + 2 * ow, h + 2 * ow, ow, outline);
+        drawRoundedRectOutline(x, y, w, h, r, ow, outline);
+    }
+
+    public static void drawRoundedRectOutline(float x, float y, float w, float h, float r, float ow, Color c) {
+        float s = getScaleFactor();
+        x = snap(x); y = snap(y); w = snap(w); h = snap(h); r = snap(r); ow = snap(ow);
+        float outerR = r * s;
+        float innerR = Math.max(r - ow, 0) * s;
+        RRect outer = RRect.makeXYWH(x * s, y * s, w * s, h * s, outerR);
+        RRect inner = RRect.makeXYWH((x + ow) * s, (y + ow) * s, (w - 2 * ow) * s, (h - 2 * ow) * s, innerR);
+        Path path = new Path();
+        path.addRRect(outer, PathDirection.CLOCKWISE);
+        path.addRRect(inner, PathDirection.COUNTER_CLOCKWISE);
+        io.github.humbleui.skija.Paint paint = getPaint(c);
+        paint.setMode(PaintMode.FILL);
+        getCanvas().drawPath(path, paint);
     }
 
     public static void drawRectWithAlign(float x, float y, float w, float h, Color c, Aligns align) {
@@ -196,9 +212,9 @@ public class Render2DUtil implements Wrapper {
         drawCircleWithInline((float) p[0], (float) p[1], (float) r, (float) id, (float) iw, base, inline);
     }
 
-    public static Pair<Double, Double> getAlignPositionAsPair(double x1, double y1, double x2, double y2, double w, double h, Aligns align) {
+    public static Pair<Double> getAlignPositionAsPair(double x1, double y1, double x2, double y2, double w, double h, Aligns align) {
         double[] pos = getAlignPosition(x1, y1, x2, y2, w, h, align);
-        return new Pair<Double, Double>(pos[0], pos[1]);
+        return new Pair<Double>(pos[0], pos[1]);
     }
 
     public static double[] getAlignPosition(double x1, double y1, double x2, double y2, double w, double h, Aligns align) {
@@ -337,14 +353,17 @@ public class Render2DUtil implements Wrapper {
         }
     }
 
-    public static void drawShadow(float x, float y, float width, float height, float radius) {
-
-        io.github.humbleui.skija.Paint paint = getPaint(new Color(0, 0, 0, 120));
+    public static void drawShadow(float x, float y, float width, float height, float radius, Color shadowColor) {
+        io.github.humbleui.skija.Paint paint = getPaint(shadowColor);
 
         paint.setImageFilter(ImageFilter.makeBlur(2.5F, 2.5F, FilterTileMode.DECAL));
         save();
         clip(x, y, width, height, radius, ClipMode.DIFFERENCE);
         getCanvas().drawRRect(RRect.makeXYWH(x, y, width, height, radius), paint);
         restore();
+    }
+
+    private static float snap(float v) {
+        return Math.round(v * getScaleFactor()) / getScaleFactor();
     }
 }

@@ -2,7 +2,7 @@ package cc.vergency.utils.render.font;
 
 import io.github.humbleui.skija.Font;
 
-public class Fonts {
+public class FontRenderers {
 	private static final String RHR = "rhr.ttf";
 	private static final String SANS = "sans.ttf";
 	private static final String ICON_FILL = "MaterialSymbolsRounded_Fill.ttf";
