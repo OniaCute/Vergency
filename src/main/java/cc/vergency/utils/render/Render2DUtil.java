@@ -10,6 +10,7 @@ import cc.vergency.utils.render.skia.SkiaContext;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.humbleui.skija.*;
 import io.github.humbleui.skija.Canvas;
+import io.github.humbleui.skija.Paint;
 import io.github.humbleui.types.RRect;
 import io.github.humbleui.types.Rect;
 import net.minecraft.client.MinecraftClient;
@@ -149,10 +150,26 @@ public class Render2DUtil implements Wrapper {
     }
 
     public static void drawCircleWithInline(float x, float y, float r, float id, float iw, Color base, Color inline) {
-        float s = getScaleFactor();
-        drawCircle(x, y, r + id + iw, inline);
-        drawCircle(x, y, r + id, inline);
         drawCircle(x, y, r, base);
+        drawCircleInline(x, y, r, id, iw, inline);
+    }
+
+    public static void drawCircleInline(float cx, float cy, float r, float distance, float width, Color color) {
+        if (width <= 0) return;
+
+        float s = getScaleFactor();
+        float innerR = (r - distance - width) * s;
+        float outerR = (r - distance) * s;
+        innerR = Math.max(innerR, 0);
+        outerR = Math.max(outerR, innerR);
+        Path inline = new Path();
+        inline.addCircle(cx * s, cy * s, outerR, PathDirection.CLOCKWISE);
+        if (innerR > 0) {
+            inline.addCircle(cx * s, cy * s, innerR, PathDirection.COUNTER_CLOCKWISE);
+        }
+
+        Paint paint = getPaint(color).setMode(PaintMode.FILL);
+        getCanvas().drawPath(inline, paint);
     }
 
     public static void drawRectWithOutline(double x, double y, double w, double h, double ow, Color fill, Color outline) {
@@ -174,17 +191,19 @@ public class Render2DUtil implements Wrapper {
     }
 
     public static void drawRoundedRectOutline(float x, float y, float w, float h, float r, float ow, Color c) {
+        if (ow <= 0) {
+            return;
+        }
         float s = getScaleFactor();
-        x = snap(x); y = snap(y); w = snap(w); h = snap(h); r = snap(r); ow = snap(ow);
-        float outerR = r * s;
-        float innerR = Math.max(r - ow, 0) * s;
-        RRect outer = RRect.makeXYWH(x * s, y * s, w * s, h * s, outerR);
-        RRect inner = RRect.makeXYWH((x + ow) * s, (y + ow) * s, (w - 2 * ow) * s, (h - 2 * ow) * s, innerR);
+        x *= s; y *= s; w *= s; h *= s; r *= s; ow *= s;
+        RRect outer = RRect.makeXYWH(x - ow, y - ow, w + 2 * ow, h + 2 * ow, r + ow);
+        RRect inner = RRect.makeXYWH(x, y, w, h, r);
+
         Path path = new Path();
         path.addRRect(outer, PathDirection.CLOCKWISE);
         path.addRRect(inner, PathDirection.COUNTER_CLOCKWISE);
-        io.github.humbleui.skija.Paint paint = getPaint(c);
-        paint.setMode(PaintMode.FILL);
+
+        Paint paint = getPaint(c).setMode(PaintMode.FILL);
         getCanvas().drawPath(path, paint);
     }
 
@@ -349,6 +368,25 @@ public class Render2DUtil implements Wrapper {
             save();
             getCanvas().clipPath(path, ClipMode.INTERSECT, true);
             drawImage(KawaseBlur.INGAME_BLUR.getTexture(), 0, 0, window.getScaledWidth(), window.getScaledHeight(), 1F, SurfaceOrigin.BOTTOM_LEFT);
+            restore();
+        }
+    }
+
+    public static void drawCircleBlur(double x, double y, double radius) {
+        drawCircleBlur((float) x, (float) y, (float) radius);
+    }
+
+    public static void drawCircleBlur(float x, float y, float radius) {
+        if (Client.INSTANCE != null && Client.INSTANCE.blurEffect.getValue()) {
+            Window window = MinecraftClient.getInstance().getWindow();
+            Path path = new Path();
+            path.addCircle(x * getScaleFactor(), y * getScaleFactor(), radius * getScaleFactor());
+            save();
+            getCanvas().clipPath(path, ClipMode.INTERSECT, true);
+            drawImage(KawaseBlur.INGAME_BLUR.getTexture(),
+                    0, 0,
+                    window.getScaledWidth(), window.getScaledHeight(),
+                    1F, SurfaceOrigin.BOTTOM_LEFT);
             restore();
         }
     }

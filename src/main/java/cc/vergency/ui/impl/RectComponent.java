@@ -102,7 +102,7 @@ public class RectComponent extends Component implements Wrapper {
 
     @Override
     public void drag(double deltaX, double deltaY, MouseButton button) {
-        if (this.draggable && this.isDragging() && this.inRect(x, y, width, height, new Pair<>(GuiManager.mouseX, GuiManager.mouseY)) && button.equals(MouseButton.Left)) {
+        if (this.draggable && this.isDragging() && this.inRect(x, y, width, height, new Pair<>(GuiManager.mousePos.getA(), GuiManager.mousePos.getB())) && button.equals(MouseButton.Left)) {
             this.x += deltaX;
             this.y += deltaY;
         }
@@ -110,7 +110,7 @@ public class RectComponent extends Component implements Wrapper {
 
     @Override
     public void clicked(MouseButton button) {
-        this.setDragging(this.draggable && this.inRect(x, y, width, height, new Pair<>(GuiManager.mouseX, GuiManager.mouseY)) && button.equals(MouseButton.Left));
+        this.setDragging(this.draggable && this.inRect(x, y, width, height, new Pair<>(GuiManager.mousePos.getA(), GuiManager.mousePos.getB())) && button.equals(MouseButton.Left));
     }
 
     @Override

@@ -50,7 +50,7 @@ public class RoundedRectComponent extends Component implements Wrapper {
     private final ColorAnimation outlineColorAnimation;
 
     public RoundedRectComponent(double x, double y, double width, double height, double radius, Color fillColor, double outlineWidth, Color outlineColor, boolean blur, ValuedAnimation valuedAnimation) {
-        super(x, y, ComponentType.Rect);
+        super(x, y, ComponentType.RoundedRect);
         this.width = width;
         this.height = height;
         this.radius = radius;
@@ -110,7 +110,7 @@ public class RoundedRectComponent extends Component implements Wrapper {
 
     @Override
     public void transfer(Component component) {
-        if (component.getType().equals(ComponentType.Rect) && (component instanceof RoundedRectComponent targetRect)) {
+        if (component.getType().equals(ComponentType.RoundedRect) && (component instanceof RoundedRectComponent targetRect)) {
             positionAnimation.modify(new Pair<>(x, y), new Pair<>(targetRect.getX(), targetRect.getY()));
             sizeAnimation.modify(new Pair<>(width, height), new Pair<>(targetRect.getWidth(), targetRect.getHeight()));
             radiusAnimation.setNumA(this.getRadius());
@@ -153,7 +153,7 @@ public class RoundedRectComponent extends Component implements Wrapper {
 
     @Override
     public void drag(double deltaX, double deltaY, MouseButton button) {
-        if (this.draggable && this.isDragging() && this.inRect(x, y, width, height, new Pair<>(GuiManager.mouseX, GuiManager.mouseY)) && button.equals(MouseButton.Left)) {
+        if (this.draggable && this.isDragging() && this.inRect(x, y, width, height, new Pair<>(GuiManager.mousePos.getA(), GuiManager.mousePos.getB())) && button.equals(MouseButton.Left)) {
             this.x += deltaX;
             this.y += deltaY;
         }
@@ -161,7 +161,7 @@ public class RoundedRectComponent extends Component implements Wrapper {
 
     @Override
     public void clicked(MouseButton button) {
-        this.setDragging(this.draggable && this.inRect(x, y, width, height, new Pair<>(GuiManager.mouseX, GuiManager.mouseY)) && button.equals(MouseButton.Left));
+        this.setDragging(this.draggable && this.inRect(x, y, width, height, new Pair<>(GuiManager.mousePos.getA(), GuiManager.mousePos.getB())) && button.equals(MouseButton.Left));
     }
 
     @Override

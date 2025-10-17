@@ -166,6 +166,10 @@ public abstract class Component {
         return pos.getA() >= x && pos.getB() >= y && pos.getA() <= x + width && pos.getB() <= y + height;
     }
 
+    protected boolean inCircle(double x, double y, double radius, Pair<Double> pos) {
+        return (pos.getA() - x) * (pos.getA() - x) + (pos.getB() - y) * (pos.getB() - y) <= radius * radius;
+    }
+
     public abstract void drag(double deltaX, double deltaY, MouseButton button);
 
     public abstract void clicked(MouseButton button);
